@@ -22,12 +22,12 @@ jobs:
         env:
           PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
 
-      - uses: ianharisay/action-aws-cli@v1.1
-      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest --cache-control max-age=${TTL},s-maxage=${TTL},must-revalidate
+      - uses: chrislennon/action-aws-cli@v1.1
+      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest --cache-control max-age=${{ TTL }},s-maxage=${{ TTL }},must-revalidate
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          TTL: 86400
+          TTL: 31536000
       
       - run: aws s3 cp dist/index.html s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest --cache-control max-age=${TTL},s-maxage=${TTL},must-revalidate
         env:
